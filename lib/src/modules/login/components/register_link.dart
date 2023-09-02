@@ -6,9 +6,9 @@ class RegisterLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+      children: const [
         Padding(
           padding: EdgeInsets.only(right: 10),
           child: Icon(Icons.post_add, color: AppColors.logo),
