@@ -63,6 +63,42 @@ mixin _$LoginController on _LoginController, Store {
     return _$sendDataAsyncAction.run(() => super.sendData());
   }
 
+  late final _$_LoginControllerActionController =
+      ActionController(name: '_LoginController', context: context);
+
+  @override
+  void setSucess({bool? value}) {
+    final _$actionInfo = _$_LoginControllerActionController.startAction(
+        name: '_LoginController.setSucess');
+    try {
+      return super.setSucess(value: value);
+    } finally {
+      _$_LoginControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setLoading({bool? value}) {
+    final _$actionInfo = _$_LoginControllerActionController.startAction(
+        name: '_LoginController.setLoading');
+    try {
+      return super.setLoading(value: value);
+    } finally {
+      _$_LoginControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void getException(int code) {
+    final _$actionInfo = _$_LoginControllerActionController.startAction(
+        name: '_LoginController.getException');
+    try {
+      return super.getException(code);
+    } finally {
+      _$_LoginControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
