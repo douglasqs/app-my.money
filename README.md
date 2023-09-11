@@ -1,5 +1,8 @@
 # senai_mymoney
+# sempre da run nesses codigos antes de iniciar ou rodar
+# esse >>>>> flutter pub get
 
+# esse >>>>> flutter pub run build_runner build --delete-conflicting-outputs
 A new Flutter project.
 
 ## Getting Started
