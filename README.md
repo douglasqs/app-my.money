@@ -1,4 +1,4 @@
-# my_money
+# senai_mymoney
 
 A new Flutter project.
 

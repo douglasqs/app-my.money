@@ -45,7 +45,11 @@ class _LoginPageState extends State<LoginPage> {
         reaction((_) => controller.isSuccess, (bool success) async {
       if (success) {
         controller.setSucess();
-        await Navigator.of(context).pushNamed(AppRouter.home);
+        await controller.verifyFirstAcess();
+        controller.isFirstAcess
+            ? await Navigator.of(context).pushNamed(AppRouter.personalRegister)
+            : await Navigator.of(context)
+                .pushNamedAndRemoveUntil(AppRouter.home, (route) => false);
         controller.setLoading();
       }
     });
@@ -53,71 +57,71 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: AppColors.appPageBackground,
-        body: Observer(builder: (_) {
-          return controller.isLoading
-              ? const AppLoading()
-              : SingleChildScrollView(
-                  child: SafeArea(
-                      child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 140,
-                        left: 25,
-                        right: 25,
-                      ),
-                      child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const AppLogoTitle(
-                              title: 'Login My Money',
-                              iconSize: 80,
-                              titleSize: 20,
-                            ),
-                            TextFormField(
-                              enabled: true,
-                              controller: loginController,
-                              textAlign: TextAlign.start,
-                              autofocus: false,
-                              keyboardType: TextInputType.text,
-                              decoration:
-                                  const InputDecoration(label: Text('Login')),
-                            ),
-                            TextFormField(
-                              enabled: true,
-                              controller: passwordController,
-                              textAlign: TextAlign.start,
-                              autofocus: false,
-                              keyboardType: TextInputType.text,
-                              obscureText: true,
-                              decoration:
-                                  const InputDecoration(label: Text('Senha')),
-                            ),
-                            Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 10),
-                                child: AppButton(
-                                    action: () {
-                                      controller.checkData(
-                                        emailController: loginController.text,
-                                        passwordController:
-                                            passwordController.text,
-                                        buildContext: context,
-                                      );
-                                    },
-                                    label: "Login")),
-                            GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, AppRouter.register);
-                                },
-                                child: const RegisterLink()),
-                          ]),
+    return Observer(builder: (_) {
+      return controller.isLoading
+          ? const AppLoading()
+          : Scaffold(
+              backgroundColor: AppColors.appPageBackground,
+              body: SingleChildScrollView(
+                child: SafeArea(
+                    child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 140,
+                      left: 25,
+                      right: 25,
                     ),
-                  )),
-                );
-        }));
+                    child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const AppLogoTitle(
+                            title: 'Login My Money',
+                            iconSize: 80,
+                            titleSize: 20,
+                          ),
+                          TextFormField(
+                            enabled: true,
+                            controller: loginController,
+                            textAlign: TextAlign.start,
+                            autofocus: false,
+                            keyboardType: TextInputType.text,
+                            decoration:
+                                const InputDecoration(label: Text('Login')),
+                          ),
+                          TextFormField(
+                            enabled: true,
+                            controller: passwordController,
+                            textAlign: TextAlign.start,
+                            autofocus: false,
+                            keyboardType: TextInputType.text,
+                            obscureText: true,
+                            decoration:
+                                const InputDecoration(label: Text('Senha')),
+                          ),
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 10),
+                              child: AppButton(
+                                  action: () {
+                                    controller.checkData(
+                                      emailController: loginController.text,
+                                      passwordController:
+                                          passwordController.text,
+                                      buildContext: context,
+                                    );
+                                  },
+                                  label: "Login")),
+                          GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, AppRouter.register);
+                              },
+                              child: const RegisterLink()),
+                        ]),
+                  ),
+                )),
+              ));
+    });
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_money/src/modules/history/page/history_page.dart';
 import 'package:my_money/src/modules/home/page/home_page.dart';
 import 'package:my_money/src/modules/initial/page/initial_page.dart';
 import 'package:my_money/src/modules/login/page/login_page.dart';
@@ -19,7 +20,6 @@ class App extends StatelessWidget {
       title: 'My Money',
       theme: ThemeData(
         primarySwatch: Colors.green,
-        useMaterial3: true,
       ),
       home: const InitialPage(),
       debugShowCheckedModeBanner: false,
@@ -29,6 +29,7 @@ class App extends StatelessWidget {
         AppRouter.register: (context) => const RegisterPage(),
         AppRouter.personalRegister: (context) => const PersonalRegisterPage(),
         AppRouter.home: (context) => const HomePage(),
+        AppRouter.history: (context) => const HistoryPage(),
       },
     );
   }

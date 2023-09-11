@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_money/src/modules/personal_register/controller/personal_register_controller.dart';
+import 'package:my_money/src/router/app_router.dart';
 import 'package:my_money/src/shared/colors/app_colors.dart';
 import 'package:my_money/src/shared/components/app_button.dart';
 import 'package:my_money/src/shared/components/app_loading.dart';
@@ -27,8 +28,7 @@ class _PersonalRegisterPageState extends State<PersonalRegisterPage> {
     controller.loadUser().then((user) {
       fullNameController.text = user.fullName;
       emailController.text = user.email;
-      limitValueController.text =
-          user.limitValue == null ? "0" : user.limitValue.toString();
+      limitValueController.text = user.limitValue.toString();
     });
   }
 
@@ -50,7 +50,11 @@ class _PersonalRegisterPageState extends State<PersonalRegisterPage> {
   void reactsToSendDataSuccess() {
     sendDataReactionDisposer =
         reaction((_) => controller.isSuccess, (bool success) {
-      if (success) Navigator.of(context).pop();
+      if (success) {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(AppRouter.home, (route) => false);
+        controller.isLoading = false;
+      }
     });
   }
 
@@ -61,7 +65,10 @@ class _PersonalRegisterPageState extends State<PersonalRegisterPage> {
           backgroundColor: AppColors.appPageBackground,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: AppColors.logo,
+            ),
             onPressed: () => Navigator.pop(context),
           ),
         ),
@@ -118,6 +125,32 @@ class _PersonalRegisterPageState extends State<PersonalRegisterPage> {
                                 decoration: const InputDecoration(
                                     label: Text("Limite de gastos")),
                               ),
+                              limitValueController.text == '0.0'
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFE0E0E0),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Informe seu limite de gastos",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
                               Padding(
                                 padding: const EdgeInsets.only(top: 20),
                                 child: AppButton(
